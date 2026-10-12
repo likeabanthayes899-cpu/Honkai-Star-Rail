@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stellar Warp | HSR Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo">STELLAR WARP</div>
+
+    <div class="resources">
+      <div>✧ Stellar Jade: <span id="jade">1600</span></div>
+      <div>✦ Special Passes: <span id="passes">10</span></div>
+    </div>
+
+    
+<div class="pity-panel">
+  <p>5★ Pity: <span id="pity">0</span>/90</p>
+  <p>4★ Pity: <span id="fourStarPity">0</span>/10</p>
+  <p>Next 5★ guaranteed: <span id="guarantee">No</span></p>
+</div>
+
+<!-- STAGE 13.1: PULL STATISTICS -->
+<div class="stats-panel">
+  <h3>Warp Statistics</h3>
+  <p>Total Pulls: <span id="totalPulls">0</span></p>
+  <p>5-Star Characters: <span id="fiveStarCount">0</span></p>
+  <p>4-Star Characters: <span id="fourStarCount">0</span></p>
+  
+<p>5-Star Rate: <span id="fiveStarRate">0%</span></p>
+<p>4-Star Rate: <span id="fourStarRate">0%</span></p>
+<button id="resetStats" type="button">
+  Reset Pull Statistics
+</button>
+
+<!-- STAGE 13.4: SAVE BACKUP -->
+<button id="exportSave" type="button">
+  Export Save Backup
+</button>
+
+<p id="backupMessage" aria-live="polite"></p>
+
+<!-- STAGE 13.5: IMPORT SAVE BACKUP -->
+<input
+  type="file"
+  id="importSaveFile"
+  accept=".json,application/json"
+  hidden
+>
+
+<button id="importSave" type="button">
+  Import Save Backup
+</button>
+
+<p id="importMessage" aria-live="polite"></p>
+
+</div>
+
+
+<section class="developer-panel">
+  <!-- Developer login -->
+  <button id="devLoginToggle" type="button">
+    🔒 Developer Login
+  </button>
+
+  <div id="devLoginArea" hidden>
+    <h3>Developer Login</h3>
+
+    <label for="devPassword">Developer Password</label>
+    <input
+      id="devPassword"
+      type="password"
+      placeholder="Enter developer password"
+    >
+
+    <button id="devLogin" type="button">Unlock</button>
+
+    <p id="devLoginMessage" aria-live="polite"></p>
+  </div>
+
+  <!-- Developer controls (hidden until login) -->
+  <div id="devContent" hidden>
+    <h3>Developer Options</h3>
+
+    <label for="devPasses">Special Passes to add</label>
+    <input
+      id="devPasses"
+      type="number"
+      min="0"
+      max="999999"
+      value="10"
+    >
+
+    <button id="givePasses" type="button">
+      Give Special Passes
+    </button>
+
+    <label for="devJade">Stellar Jade to add</label>
+    <input
+      id="devJade"
+      type="number"
+      min="0"
+      max="9999999"
+      value="1600"
+    >
+
+    <button id="giveJade" type="button">
+      Give Stellar Jade
+    </button>
+
+    <button id="devLogout" type="button">
+      🔒 Lock Developer Options
+    </button>
+
+    <p id="devMessage" aria-live="polite"></p>
+  </div>
+</section>
+
+  </header>
+
+  <main>
+    <section class="banner">
+      <div class="banner-info">
+        <p class="eyebrow">CHARACTER EVENT WARP</p>
+        <h1 id="featuredName">THE HERTA</h1>
+        <p class="rarity">★★★★★ &nbsp; ICE · ERUDITION</p>
+        <p class="description">
+          A limited character banner from Honkai: Star Rail.
+          Your next adventure awaits among the stars.
+        </p>
+        <p class="featured">FEATURED 5-STAR CHARACTER</p>
+      </div>
+
+      <div class="character-art" id="characterArt">
+        <div class="star">✦</div>
+        <div class="character-initial">H</div>
+        <div class="art-caption">THE HERTA</div>
+      </div>
+    </section>
+
+    <section class="warp-panel">
+      <div class="banner-select">
+        <label for="characterSelect">Featured character</label>
+     
+<div class="character-picker">
+  <h2>SELECT YOUR FEATURED CHARACTER</h2>
+  <p class="character-subtitle">Choose a character to feature on your warp banner</p>
+  <div id="characterGrid" class="character-grid"></div>
+</div>
+
+      </div>
+
+      <div class="warp-buttons">
+        <button id="singlePull">WARP × 1</button>
+        <button id="tenPull">WARP × 10</button>
+      </div>
+
+      <p class="cost">160 Stellar Jade per warp</p>
+    </section>
+
+    <section class="results-panel">
+      <h2>WARP RESULTS</h2>
+      <div id="results">
+        Your pulled characters will appear here.
+      </div>
+    </section>
+
+<
+<!-- STAGE 15.2: STELLAR ARCADE LAUNCHER -->
+<section class="stellar-arcade">
+  <div id="arcadeLauncher">
+    <h2>✦ Stellar Arcade ✦</h2>
+    <p class="arcade-description">
+      Choose a game and earn Stellar Jade!
+    </p>
+
+    <div class="arcade-game-icons">
+      <button
+        class="arcade-game-icon"
+        id="openMemoryGame"
+        type="button"
+      >
+        <span class="game-icon-art">🌌</span>
+        <span class="game-icon-title">Memory Match</span>
+        <span class="game-icon-reward">✧ 100 Jade</span>
+      </button>
+
+      <button
+        class="arcade-game-icon"
+        id="openMahjongGame"
+        type="button"
+      >
+        <span class="game-icon-art">🀄</span>
+        <span class="game-icon-title">Mahjong</span>
+        <span class="game-icon-reward">✧ 100 Jade</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MEMORY MATCH WINDOW -->
+  <div id="memoryGameWindow" class="arcade-game" hidden>
+    <div class="arcade-game-header">
+      <h2>🌌 Memory Match</h2>
+      <button
+        class="arcade-close"
+        type="button"
+        data-close-arcade
+        aria-label="Close Memory Match"
+      >✕</button>
+    </div>
+
+    <p>Find all 6 matching pairs!</p>
+    <p class="arcade-reward">✧ Reward: 100 Stellar Jade</p>
+
+    <div class="memory-stats">
+      <span>Pairs: <span id="memoryPairs">0</span>/6</span>
+      <span>Moves: <span id="memoryMoves">0</span></span>
+    </div>
+
+    <div id="memoryGrid" class="memory-grid"></div>
+
+    <p id="memoryMessage" aria-live="polite">
+      Find matching pairs of cosmic symbols!
+    </p>
+
+    <div class="arcade-buttons">
+      <button id="claimMemoryReward" type="button" disabled>
+        Match all pairs to claim
+      </button>
+      <button id="newMemoryGame" type="button">
+        New Game
+      </button>
+    </div>
+  </div>
+
+  <!-- MAHJONG WINDOW -->
+  <div id="mahjongGameWindow" class="arcade-game" hidden>
+    <div class="arcade-game-header">
+      <h2>🀄 Mahjong Solitaire</h2>
+      <button
+        class="arcade-close"
+        type="button"
+        data-close-arcade
+        aria-label="Close Mahjong"
+      >✕</button>
+    </div>
+
+    <p>Find and match all 8 pairs of tiles!</p>
+    <p class="arcade-reward">✧ Reward: 100 Stellar Jade</p>
+
+    <div class="memory-stats">
+      <span>Pairs: <span id="mahjongPairs">0</span>/8</span>
+      <span>Moves: <span id="mahjongMoves">0</span></span>
+    </div>
+
+    <div id="mahjongGrid" class="mahjong-grid"></div>
+
+    <p id="mahjongMessage" aria-live="polite">
+      Select two identical tiles to match them!
+    </p>
+
+    <div class="arcade-buttons">
+      <button id="claimMahjongReward" type="button" disabled>
+        Match all pairs to claim
+      </button>
+      <button id="newMahjongGame" type="button">
+        New Game
+      </button>
+    </div>
+  </div>
+</section>
+
+
+    <section class="collection-section">
+  <h2>CHARACTER COLLECTION</h2>
+  <p class="collection-subtitle">Your recruited characters</p>
+  
+<!-- STAGE 14.1: COLLECTION SEARCH -->
+<input
+  type="text"
+  id="collectionSearch"
+  placeholder="Search your characters..."
+  autocomplete="off"
+>
+
+  <div id="collection" class="collection-grid">
+    <p class="empty-collection">No characters collected yet.</p>
+  </div>
+</section>
+<section class="history-section">
+  <h2>WARP HISTORY</h2>
+  <p class="history-subtitle">Your past warps</p>
+
+  <div class="history-controls">
+    <button id="clearHistory">Clear History</button>
+  </div>
+
+  <div id="history">
+    <p class="empty-history">No pulls recorded yet.</p>
+  </div>
+</section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
