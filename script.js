@@ -357,10 +357,16 @@ function renderCollection() {
     return a.name.localeCompare(b.name);
   });
 
-  const filteredCharacters = collectedCharacters.filter(character =>
-    character.name.toLowerCase().includes(searchTerm)
-  );
+ const filteredCharacters = collectedCharacters.filter(character => {
+  const matchesSearch =
+    character.name.toLowerCase().includes(searchTerm);
 
+  const matchesRarity =
+    collectionRarityFilter === "all" ||
+    character.rarity === collectionRarityFilter;
+
+  return matchesSearch && matchesRarity;
+});
   if (filteredCharacters.length === 0) {
     collectionDisplay.innerHTML =
       '<p class="empty-collection">No matching characters found.</p>';
@@ -1075,7 +1081,38 @@ importSaveFile.addEventListener("change", async () => {
 document.getElementById("collectionSearch").addEventListener("input", () => {
   renderCollection();
 });
+/* STAGE 14.2: COLLECTION FILTERS */
 
+let collectionRarityFilter = "all";
+
+function setCollectionFilter(filter) {
+  collectionRarityFilter = filter;
+
+  document.querySelectorAll(".collection-filters button")
+    .forEach(button => button.classList.remove("active"));
+
+  if (filter === "all") {
+    document.getElementById("filterAll").classList.add("active");
+  } else if (filter === 5) {
+    document.getElementById("filterFiveStar").classList.add("active");
+  } else {
+    document.getElementById("filterFourStar").classList.add("active");
+  }
+
+  renderCollection();
+}
+
+document.getElementById("filterAll").addEventListener("click", () => {
+  setCollectionFilter("all");
+});
+
+document.getElementById("filterFiveStar").addEventListener("click", () => {
+  setCollectionFilter(5);
+});
+
+document.getElementById("filterFourStar").addEventListener("click", () => {
+  setCollectionFilter(4);
+});
 
 /* ============================
    DEVELOPER OPTIONS

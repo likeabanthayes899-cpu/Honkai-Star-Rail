@@ -1190,3 +1190,29 @@ h2 {
     gap: 5px;
   }
 }
+/* STAGE 14.2: COLLECTION FILTERS */
+
+.collection-filters {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px auto 15px;
+}
+
+.collection-filters button {
+  padding: 7px 14px;
+  border: 1px solid #59658f;
+  border-radius: 7px;
+  background: rgba(25, 30, 55, 0.85);
+  color: white;
+  cursor: pointer;
+}
+
+.collection-filters button:hover {
+  background: rgba(80, 75, 120, 0.9);
+}
+
+.collection-filters button.active {
+  border-color: #ffd76a;
+  color: #ffd76a;
+}

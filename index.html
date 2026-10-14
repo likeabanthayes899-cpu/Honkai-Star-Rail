@@ -278,13 +278,17 @@
   <h2>CHARACTER COLLECTION</h2>
   <p class="collection-subtitle">Your recruited characters</p>
   
-<!-- STAGE 14.1: COLLECTION SEARCH -->
 <input
   type="text"
   id="collectionSearch"
   placeholder="Search your characters..."
   autocomplete="off"
 >
+<div class="collection-filters">
+  <button id="filterAll" type="button" class="active">All</button>
+  <button id="filterFiveStar" type="button">5★</button>
+  <button id="filterFourStar" type="button">4★</button>
+</div>
 
   <div id="collection" class="collection-grid">
     <p class="empty-collection">No characters collected yet.</p>
